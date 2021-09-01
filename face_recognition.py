@@ -6,9 +6,9 @@ import face_extractor as fe
 from keras.models import load_model
 from PIL import Image
 
-input_im = cv2.imread('./iva.jpg')
+input_im = cv2.imread('./kekster_offset50.jpg')
 
-input_im = fe.face_extractor(input_im)
+input_im = fe.face_extract(input_im, 0)
 
 if type(input_im) is not np.ndarray:
     print('[ERROR] no faces found')
