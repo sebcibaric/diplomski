@@ -3,6 +3,7 @@ import os
 import cv2
 import time
 import argparse
+import face_extractor as fe
 
 parser = argparse.ArgumentParser(description="Takes batch of photos")
 parser.add_argument('-n', '--name', type=str, nargs='+', help='Person\'s name, required argument', required=True)
@@ -39,8 +40,14 @@ for i in range(0, 200):
         print('[ERROR] Failed to take a picture')
         break
 
+    extracted_face = fe.face_extract(frame, 40)
+
+    if not len(extracted_face):
+        print('[INFO] Face not found')
+        continue
+
     img = '{}/{}.jpg'.format(path, timestamp)
-    cv2.imwrite(img, frame)
+    cv2.imwrite(img, extracted_face)
     print(img)
 
 cam.release()
