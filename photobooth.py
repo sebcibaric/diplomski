@@ -27,13 +27,8 @@ for purpose in purposes:
 purpose = purposes[0]
 lista = []
 cam = cv2.VideoCapture(0)
-for i in range(0, 200):
-    if i == 160:
-        purpose = purposes[1]
-    
-    path = './dataset/{}/{}'.format(purpose, name)
-    time_to_int = int(time.time())
-    timestamp = str(time_to_int + i)
+i = 0
+while i <= 200:
 
     ret, frame = cam.read()
 
@@ -47,8 +42,16 @@ for i in range(0, 200):
         print('[INFO] Face not found')
         continue
 
+    if i == 160:
+        purpose = purposes[1]
+    
+    path = './dataset/{}/{}'.format(purpose, name)
+    time_to_int = int(time.time())
+    timestamp = str(time_to_int + i)
+
     img = '{}/{}.jpg'.format(path, timestamp)
     cv2.imwrite(img, extracted_face)
     print(img)
+    i = i + 1
 
 cam.release()
