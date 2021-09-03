@@ -3,6 +3,7 @@ import os
 import cv2
 import time
 import argparse
+import numpy as np
 import face_extractor as fe
 
 parser = argparse.ArgumentParser(description="Takes batch of photos")
@@ -42,7 +43,7 @@ for i in range(0, 200):
 
     extracted_face = fe.face_extract(frame, 40)
 
-    if not len(extracted_face):
+    if type(extracted_face) is not np.ndarray:
         print('[INFO] Face not found')
         continue
 
