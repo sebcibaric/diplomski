@@ -28,7 +28,7 @@ purpose = purposes[0]
 lista = []
 cam = cv2.VideoCapture(0)
 i = 0
-while i <= 200:
+while i < 200:
 
     ret, frame = cam.read()
 
