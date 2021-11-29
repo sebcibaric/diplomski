@@ -4,12 +4,19 @@ import cv2
 import argparse
 import numpy as np
 import face_extractor as fe
+import drivers
 from keras.models import load_model
+from time import sleep
 from PIL import Image
 
 
 def face_rec(args, model, labels):
     cam = cv2.VideoCapture(0)
+    display = None
+
+    if args.lcd:
+        display = drivers.Lcd()
+
     try:
         while True:
             ret, frame = cam.read()
@@ -18,6 +25,7 @@ def face_rec(args, model, labels):
 
             if type(input_im) is not np.ndarray:
                 print('[ERROR] No faces found')
+                sleep(2)
                 continue
 
             input_im = cv2.resize(input_im, (224, 224), interpolation=cv2.INTER_LINEAR)
@@ -40,13 +48,18 @@ def face_rec(args, model, labels):
                 message = 'osoba nije prepoznata'
 
             if args.lcd:
-                print('ispisi na LCD-u')
+                display.lcd_display_string("Ispred kamere je", 1)
+                display.lcd_display_string("{}".format(name), 2)
             elif args.cli:
                 print(message)
 
+            sleep(4)
     except KeyboardInterrupt:
         print('[WARN] Program shutdown')
-    
+
+    if args.lcd:
+        display.lcd_clear()
+
     cam.release()
 
 
@@ -58,7 +71,7 @@ def main():
 
     args = parser.parse_args()
 
-    model = load_model('model-softmax.h5')
+    model = load_model('model.h5')
 
     labels = {}
     with open('data.json', 'r') as json_file:
