@@ -45,11 +45,13 @@ def main():
             print('[ERROR] Failed to take a picture')
             break
 
-        extracted_face = fe.face_extract(frame, 0)
-
-        if type(extracted_face) is not np.ndarray:
+        faces = fe.face_extract(frame)
+        if not len(faces):
             print('[INFO] Face not found')
             continue
+
+        x, y, w, h = faces[0]
+        extracted_face = fe.crop_face(frame, x, y, w, h)    
 
         if i == 161:
             purpose = purposes[1]

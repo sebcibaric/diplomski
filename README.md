@@ -28,7 +28,11 @@ Pokreće se python skripta za treniranje modela na skupu fotografija koje se nal
 ````
 python face_recognition.py --lcd
 python face_recognition.py --cli
+python face_recognition.py --video
 ````
 Pokreće se python skripta za prepoznavanje lica. Kamera na računalu mora biti upaljena.
 - Ako je postavljen parametar **lcd** obavezno zaslon mora biti spojen na RPi, ispis će biti na zaslonu
 - Ako je postavljen parametar **cli** ispis će biti isključivo u naredbenom retku
+- Ako je postavljen parametar **video** prikazat će se prozor u kojem će se prikazivati ono što se nalazi
+ispred kamere u stvarnom vremenu. Program može prepoznati više lica odjednom te će pisati tko je tko.
+Lica će biti omeđena kvadratom
